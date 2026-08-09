@@ -202,11 +202,6 @@ alias pkgfix='sudo apt --fix-broken install'
 alias pkgclean='sudo apt autoremove -y && sudo apt autoclean'
 
 
-# network
-alias listen='ss -tunlp'
-alias checketc='getent hosts'
-alias myip='curl -s ifconfig.me && echo'
-
 
 # pentest — file server (replaces python -m http.server)
 alias sraven='raven 0.0.0.0 8080'
