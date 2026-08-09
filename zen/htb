@@ -1,0 +1,22 @@
+# htb profile — HTB lab recon helpers
+
+hnmap() {
+    if [[ "$1" == "--show" ]]; then
+        if [[ -z "$2" ]]; then
+            echo "usage: hnmap --show <ip>"
+            return 1
+        fi
+        echo "nmap -Pn -sS --min-rate 3000 --open -T4 --top-ports 100 $2"
+        return 0
+    fi
+
+    if [[ -z "$1" ]]; then
+        echo "usage: hnmap <ip>"
+        return 1
+    fi
+    nmap -Pn -sS --min-rate 3000 --open -T4 --top-ports 100 "$1"
+}
+
+__zen_unload_htb() {
+    unfunction hnmap
+}

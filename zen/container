@@ -1,0 +1,94 @@
+# CONTAINER RUNTIME
+# Set default container runtime (can be 'podman' or 'docker')
+CTR=podman
+
+# List only currently running containers.
+# Shows container ID, image, command, uptime, ports, and name.
+cps() {
+  $CTR ps "$@"
+}
+
+# List ALL containers, including stopped/exited ones.
+cpsa() {
+  $CTR ps -a "$@"
+}
+
+# Display all container images stored locally.
+cimg() {
+  $CTR images "$@"
+}
+
+# Remove (delete) a container by ID or name.
+# Will FAIL if the container is still running.
+crm() {
+  $CTR rm "$@"
+}
+
+# Force remove a container (even if it's running).
+# ⚠️ Risk: may cause data loss if the container is doing something important.
+crmf() {
+  $CTR rm -f "$@"
+}
+
+# Remove a container image by name or ID.
+# Will FAIL if any container is using the image.
+crmi() {
+  $CTR rmi "$@"
+}
+
+# Force remove an image, even if it's in use by stopped containers.
+# ⚠️ Risk: may break dependent containers or workflows.
+crmif() {
+  $CTR rmi -f "$@"
+}
+
+# Run a container in interactive mode with terminal attached.
+# Example: crun ubuntu:22.04 bash
+crun() {
+  $CTR run -it "$@"
+}
+
+# Run a container in detached (background) mode.
+crund() {
+  $CTR run -dit "$@"
+}
+
+# Stop a running container gracefully.
+cstop() {
+  $CTR stop "$@"
+}
+
+# Start a previously stopped container.
+cstart() {
+  $CTR start "$@"
+}
+
+# Execute a command inside a running container.
+# Example: cexec <container> bash
+cexec() {
+  $CTR exec -it "$@"
+}
+
+# Show logs produced by a container.
+clog() {
+  $CTR logs "$@"
+}
+
+# Follow logs in real-time (like 'tail -f').
+clogf() {
+  $CTR logs -f "$@"
+}
+
+# Remove all unused data: stopped containers, unused images, networks, cache.
+# ⚠️ Risk: deletes anything not actively in use—no undo.
+cprune() {
+  $CTR system prune -f "$@"
+}
+
+
+# — ZEN unload hook
+
+__zen_unload_container() {
+    unset CTR
+    unfunction cps cpsa cimg crm crmf crmi crmif crun crund cstop cstart cexec clog clogf cprune
+}
