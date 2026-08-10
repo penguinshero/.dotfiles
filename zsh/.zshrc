@@ -121,6 +121,10 @@ alias zload='source ~/.zshrc'
 alias zedit='nvim ~/.zshrc'
 
 
+# xdg-open — quick file/url opener (background, silent)
+open() { xdg-open "$@" &>/dev/null & }
+
+
 # zen — zsh extension node
 zen() {
     local profile_dir="$HOME/.dotfiles/zen"
@@ -202,11 +206,6 @@ alias pkgfix='sudo apt --fix-broken install'
 alias pkgclean='sudo apt autoremove -y && sudo apt autoclean'
 
 
-
-# pentest — file server (replaces python -m http.server)
-alias sraven='raven 0.0.0.0 8080'
-
-
 # kitty
 kreload() { pkill -SIGUSR1 kitty && echo "kitty config reloaded"; }
 
@@ -225,7 +224,7 @@ clip() {
 pyactive() { source "$HOME/Public/python/.venv/bin/activate"; }
 
 
-# filesystem — tree view + block device info
+# filesystem — tree view
 t() {
     local depth=1
     local files_only=false
@@ -239,7 +238,6 @@ t() {
         tree -L "$depth" -d
     fi
 }
-alias drives='lsblk -e7 -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINTS,MODEL,TRAN'
 
 
 # go
@@ -250,7 +248,7 @@ goclean() {
 }
 
 
-# text utils — line: print line/range, pick: select columns
+# print specific line or range — usage: cmd | line 5  OR  cmd | line 3-7  OR  cmd | line 8,9,10
 line() {
     if [ -z "$1" ]; then
         wc -l
@@ -271,6 +269,8 @@ line() {
     fi
 }
 
+
+# pick columns from output — usage: cmd | pick 1 3  OR  cmd | pick -d: 1 2  OR  cmd | pick 1-3
 pick() {
     local delim='[[:space:]]+'
     local cols=""
@@ -310,10 +310,6 @@ pick() {
 export GOPATH="$HOME/Public/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
-
-
-# recon — metasploit launcher (kali helper script)
-alias msf='/usr/share/kali-menu/helper-scripts/metasploit-framework.sh'
 
 
 # prompt
