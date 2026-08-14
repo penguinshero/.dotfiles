@@ -306,6 +306,22 @@ pick() {
 }
 
 
+# system utils — process kill, disk usage, listening ports
+killp() {
+    local pid
+    pid=$(ps -ef | sed 1d | fzf -m --header='select process to kill' | awk '{print $2}')
+    [[ -n "$pid" ]] && echo "$pid" | xargs kill -9
+}
+
+
+# disk usage — show total size of a file or directory
+sizeof() { du -sh "${1:-.}" }
+
+
+# network ports — list listening and bound TCP/UDP sockets with process info
+listen() { ss -tunlp | awk 'NR==1 || /LISTEN|UNCONN/' | pick 1,5,7 }
+
+
 # environment
 export GOPATH="$HOME/Public/go"
 export GOBIN="$GOPATH/bin"
