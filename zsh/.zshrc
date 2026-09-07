@@ -313,6 +313,8 @@ killp() {
     [[ -n "$pid" ]] && echo "$pid" | xargs kill -9
 }
 
+# vmware — reloads kernel modules before launching
+alias vmreload='sudo vmware-modconfig --console --install-all'
 
 # disk usage — show total size of a file or directory
 sizeof() { du -sh "${1:-.}" }
